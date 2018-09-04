@@ -40,7 +40,7 @@ class MainActivityFragment : Fragment(), Observer<List<WordCount>> {
             fab.callOnClick()
         }
 
-        fetchData()
+        mWordCountViewModel?.fetchParsedData()?.observe(this, this )
 
         fab.setOnClickListener {
             if( validate() ) {
@@ -90,10 +90,6 @@ class MainActivityFragment : Fragment(), Observer<List<WordCount>> {
             return false
         }
         return true
-    }
-
-    private fun fetchData() {
-        mWordCountViewModel?.fetchParsedData()?.observe(this, this )
     }
 
     override fun onChanged(t: List<WordCount>?) {
