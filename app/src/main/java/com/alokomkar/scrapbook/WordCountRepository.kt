@@ -14,10 +14,18 @@ class WordCountRepository( application: Application ) : DataAPI, WordCountTask.T
     //https://www.yudiz.com/data-scraping-in-android-using-jsoupjava-html-parser/
     //https://www.tutorialspoint.com/jsoup/jsoup_parse_string.htm
 
+    private var mIsFiltered : Boolean = false
+    private var mUrl : String ?= null
     private val mMutableContent = MutableLiveData<List<WordCount>>()
 
+    override fun toggleFilter( isFiltered: Boolean ) {
+        mIsFiltered = isFiltered
+        if( mUrl != null )
+            parseUrl(mUrl!!)
+    }
+
     override fun parseUrl(url: String) {
-        WordCountTask(this ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
+        WordCountTask(this, mIsFiltered ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
     }
 
     override fun fetchParsedData(): LiveData<List<WordCount>>
@@ -25,4 +33,5 @@ class WordCountRepository( application: Application ) : DataAPI, WordCountTask.T
 
     override fun onDataFetched(contentList: List<WordCount>?)
             = mMutableContent.postValue( contentList )
+
 }

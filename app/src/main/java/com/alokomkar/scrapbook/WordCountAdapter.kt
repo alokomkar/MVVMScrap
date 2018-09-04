@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 @SuppressLint("InflateParams")
-class WordCountAdapter( private var contentList : ArrayList<WordCount> ) : RecyclerView.Adapter<WordCountAdapter.ViewHolder>() {
+class WordCountAdapter( private var contentList: ArrayList<WordCount>, var mCount: Int ) : RecyclerView.Adapter<WordCountAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
             = ViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.item_word_count, null))
 
     override fun getItemCount(): Int
-            = contentList.size
+            = if( mCount > 0 ) mCount else contentList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
             = holder.bindData(contentList[position])

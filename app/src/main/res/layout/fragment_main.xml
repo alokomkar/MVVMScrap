@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/default_padding"
     tools:context=".MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
     <EditText
         android:id="@+id/etUrl"
+        android:padding="@dimen/default_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:text="@string/default_url"
         android:layout_toLeftOf="@+id/etCount"
         android:layout_toStartOf="@+id/etCount"
         android:inputType="textUri"
@@ -20,10 +21,10 @@
 
     <EditText
         android:id="@+id/etCount"
+        android:padding="@dimen/default_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="3"
-        android:text="@string/default_count"
         android:gravity="center"
         android:hint="@string/no_of_words"
         android:inputType="numberSigned"
@@ -43,6 +44,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
+        android:layout_margin="@dimen/default_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
