@@ -8,6 +8,10 @@ class WordCountViewModel( application: Application ) : AndroidViewModel( applica
 
     private val mWordCountRepository = WordCountRepository( application )
 
+    fun loadTask() {
+        parseUrl("https://www.viacom18.com/")
+    }
+
     override fun parseUrl(url: String)
             = mWordCountRepository.parseUrl( url )
 

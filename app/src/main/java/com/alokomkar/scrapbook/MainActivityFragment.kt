@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -30,16 +29,20 @@ class MainActivityFragment : Fragment(), Observer<List<WordCount>> {
 
         mWordCountViewModel = activity?.let { ViewModelProviders.of(it).get( WordCountViewModel::class.java ) }
 
-        refreshLayout.isRefreshing = true
         rvContent.layoutManager = LinearLayoutManager( context )
         mWordCountAdapter = WordCountAdapter( mContentList )
         rvContent.adapter = mWordCountAdapter
-        refreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            refreshLayout.isRefreshing = true
-            fetchData()
-        })
+
+        refreshLayout.setOnRefreshListener {
+            fab.callOnClick()
+        }
 
         fetchData()
+
+        fab.setOnClickListener {
+            refreshLayout.isRefreshing = true
+            mWordCountViewModel?.loadTask()
+        }
     }
 
     private fun fetchData() {

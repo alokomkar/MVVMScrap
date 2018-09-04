@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/default_padding"
     tools:context=".MainActivityFragment"
     tools:showIn="@layout/activity_main">
@@ -22,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="3"
+        android:text="@string/default_count"
         android:gravity="center"
         android:hint="@string/no_of_words"
         android:inputType="numberSigned"
@@ -38,6 +40,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
 
 </RelativeLayout>
