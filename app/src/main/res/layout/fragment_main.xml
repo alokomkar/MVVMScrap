@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding"
+    tools:context=".MainActivityFragment"
+    tools:showIn="@layout/activity_main">
+
+    <EditText
+        android:id="@+id/etUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_toLeftOf="@+id/etCount"
+        android:layout_toStartOf="@+id/etCount"
+        android:inputType="textUri"
+        android:hint="@string/url" />
+
+    <EditText
+        android:id="@+id/etCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:gravity="center"
+        android:hint="@string/no_of_words"
+        android:inputType="numberSigned"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/etUrl"
+        android:id="@+id/refreshLayout">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

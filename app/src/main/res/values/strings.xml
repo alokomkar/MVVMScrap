@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">scrapbook</string>
+    <string name="action_settings">Settings</string>
+    <string name="url">Url</string>
+    <string name="no_of_words">Count</string>
+</resources>
