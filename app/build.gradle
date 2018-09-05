@@ -32,12 +32,12 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-rc01'
 
     //Test implementation
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCoreVersion"
 
     // Jsoup HTML parser
-    implementation 'org.jsoup:jsoup:1.11.1'
+    implementation "org.jsoup:jsoup:$jsoupVersion"
 
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"

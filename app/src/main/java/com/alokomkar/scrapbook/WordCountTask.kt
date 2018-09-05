@@ -1,13 +1,17 @@
 package com.alokomkar.scrapbook
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.AsyncTask
 import android.util.Log
 import org.jsoup.Jsoup
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Suppress("PrivatePropertyName")
-class WordCountTask(private val taskAPI: TaskAPI, private val isFiltered : Boolean ) : AsyncTask<String?, Void, List<WordCount>>() {
+@Suppress("PrivatePropertyName", "DEPRECATION")
+class WordCountTask(private val application : Application, private val taskAPI: TaskAPI, private val isFiltered : Boolean ) : AsyncTask<String?, Void, List<WordCount>>() {
 
     private val TAG = WordCountTask::class.java.simpleName
     private val CONTENT_TAG = "content"
@@ -36,8 +40,13 @@ class WordCountTask(private val taskAPI: TaskAPI, private val isFiltered : Boole
             val url = params[0]
             try {
 
-                val document = Jsoup.connect( url )
+                //TODO : Not working as intended - needs a different approach - Low priority
+                val document = if( isNetworkAvailable() )
+                    Jsoup.connect( url )
                         .header("Cache-Control", "public, max-age=" + 60 * 15 ) // If internet present
+                        .get()
+                            else
+                    Jsoup.connect( url )
                         .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale") // if internet not present
                         .get()
                 val paragraphs = document.getElementsContainingText(CONTENT_TAG)
@@ -75,5 +84,11 @@ class WordCountTask(private val taskAPI: TaskAPI, private val isFiltered : Boole
 
         }
         return contentList
+    }
+
+    private fun isNetworkAvailable() : Boolean {
+        val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 }

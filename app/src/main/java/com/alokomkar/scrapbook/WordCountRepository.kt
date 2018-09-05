@@ -5,10 +5,9 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.os.AsyncTask
 
-class WordCountRepository( application: Application ) : DataAPI, WordCountTask.TaskAPI {
+class WordCountRepository( private val application: Application ) : DataAPI, WordCountTask.TaskAPI {
 
     //https://www.journaldev.com/20126/android-rss-feed-app
-    //jsoup parsing mvvm android
     //https://github.com/hasancse91/android-web-scraping-app-jsoup/blob/master/WebScrapingbyJsoup-code/app/src/main/java/com/hellohasan/webscrapingbyjsoup/Parser/HtmlParser.java
     //https://medium.com/@princessdharmy/getting-started-with-jsoup-in-android-594e89dc891f
     //https://www.yudiz.com/data-scraping-in-android-using-jsoupjava-html-parser/
@@ -24,8 +23,9 @@ class WordCountRepository( application: Application ) : DataAPI, WordCountTask.T
             parseUrl(mUrl!!)
     }
 
+    @Synchronized
     override fun parseUrl(url: String) {
-        WordCountTask(this, mIsFiltered ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
+        WordCountTask( application,this, mIsFiltered ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
     }
 
     override fun fetchParsedData(): LiveData<List<WordCount>>
