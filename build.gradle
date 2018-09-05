@@ -6,6 +6,9 @@ buildscript {
     ext.roomVersion = '1.1.1'
     ext.junitVersion = '4.12'
     ext.testRunnerVersion = '1.0.2'
+    ext.mockitoVersion = '2.8.47'
+    ext.powerMockito = '1.6.2'
+    ext.hamcrestVersion = '1.3'
     ext.espressoCoreVersion = '3.0.2'
     ext.jsoupVersion = '1.11.3'
     repositories {
