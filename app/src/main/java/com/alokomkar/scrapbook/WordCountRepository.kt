@@ -6,7 +6,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.os.AsyncTask
 
 
-class WordCountRepository( private val application: Application ) : DataAPI, WordCountTask.TaskAPI {
+class WordCountRepository( private val application: Application ) : DataAPI, TaskAPI {
+
 
     //https://www.journaldev.com/20126/android-rss-feed-app
     //https://github.com/hasancse91/android-web-scraping-app-jsoup/blob/master/WebScrapingbyJsoup-code/app/src/main/java/com/hellohasan/webscrapingbyjsoup/Parser/HtmlParser.java
@@ -17,6 +18,7 @@ class WordCountRepository( private val application: Application ) : DataAPI, Wor
     private var mIsFiltered : Boolean = false
     private var mUrl : String ?= null
     private val mMutableContent = MutableLiveData<List<WordCount>>()
+    private val mTaskAPI : TaskAPI = WordCountTask.getTaskAPI( application, this, mIsFiltered )
 
     override fun toggleFilter( isFiltered: Boolean ) {
         mIsFiltered = isFiltered
@@ -26,8 +28,8 @@ class WordCountRepository( private val application: Application ) : DataAPI, Wor
 
     @Synchronized
     override fun parseUrl(url: String) {
-        WordCountIntentService.parseUrl( url, mIsFiltered, application )
-        //WordCountTask( application,this, mIsFiltered ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
+        mTaskAPI.execute( url )
+        //fetchParsedData()
     }
 
     override fun fetchParsedData(): LiveData<List<WordCount>>
@@ -35,5 +37,7 @@ class WordCountRepository( private val application: Application ) : DataAPI, Wor
 
     override fun onDataFetched(contentList: List<WordCount>?)
             = mMutableContent.postValue( contentList )
+
+    override fun execute(url: String) {}
 
 }

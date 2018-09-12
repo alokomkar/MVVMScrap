@@ -11,7 +11,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @Suppress("PrivatePropertyName", "DEPRECATION")
-class WordCountTask(private val application : Application, private val taskAPI: TaskAPI, private val isFiltered : Boolean ) : AsyncTask<String?, Void, List<WordCount>>() {
+class WordCountTask(private val application : Application, private val taskAPI: TaskAPI, private val isFiltered : Boolean ) : AsyncTask<String?, Void, List<WordCount>>(), TaskAPI {
+
+
 
     private val TAG = WordCountTask::class.java.simpleName
     private val CONTENT_TAG = "content"
@@ -23,14 +25,12 @@ class WordCountTask(private val application : Application, private val taskAPI: 
             "them", "in", "also",
             "because", "us")
 
-    interface TaskAPI {
-        fun onDataFetched( contentList : List<WordCount>? )
-    }
+
 
     override fun onPostExecute(result: List<WordCount>?) {
         super.onPostExecute(result)
         if( result != null )
-            taskAPI.onDataFetched( result )
+            onDataFetched( result )
     }
 
     override fun doInBackground(vararg params: String?): List<WordCount> {
@@ -90,5 +90,22 @@ class WordCountTask(private val application : Application, private val taskAPI: 
         val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         return activeNetwork?.isConnectedOrConnecting == true
+    }
+
+    override fun onDataFetched(contentList: List<WordCount>?) {
+        taskAPI.onDataFetched( contentList )
+    }
+
+    override fun execute(url: String) {
+        //To check communication : taskAPI.onDataFetched( ArrayList() )
+        this.executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
+    }
+
+    companion object {
+
+        fun getTaskAPI(application: Application, taskAPI: TaskAPI, mIsFiltered: Boolean): TaskAPI {
+            return WordCountTask( application, taskAPI, mIsFiltered )
+        }
+
     }
 }
