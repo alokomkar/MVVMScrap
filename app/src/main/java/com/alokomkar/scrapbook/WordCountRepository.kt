@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.os.AsyncTask
 
+
 class WordCountRepository( private val application: Application ) : DataAPI, WordCountTask.TaskAPI {
 
     //https://www.journaldev.com/20126/android-rss-feed-app
@@ -25,7 +26,8 @@ class WordCountRepository( private val application: Application ) : DataAPI, Wor
 
     @Synchronized
     override fun parseUrl(url: String) {
-        WordCountTask( application,this, mIsFiltered ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
+        WordCountIntentService.parseUrl( url, mIsFiltered, application )
+        //WordCountTask( application,this, mIsFiltered ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, url )
     }
 
     override fun fetchParsedData(): LiveData<List<WordCount>>

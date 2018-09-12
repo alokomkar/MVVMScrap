@@ -6,7 +6,7 @@ import android.arch.lifecycle.LiveData
 
 class WordCountViewModel( application: Application ) : AndroidViewModel( application ), DataAPI  {
 
-    private val mWordCountRepository = WordCountRepository( application )
+    private val mDataAPI : DataAPI = WordCountRepository( application )
     var mIsFiltered : Boolean = false
     var mCount : Int = -1
 
@@ -14,13 +14,13 @@ class WordCountViewModel( application: Application ) : AndroidViewModel( applica
             = parseUrl(url)
 
     override fun parseUrl( url: String )
-            = mWordCountRepository.parseUrl( url )
+            = mDataAPI.parseUrl( url )
 
     override fun fetchParsedData(): LiveData<List<WordCount>>
-            = mWordCountRepository.fetchParsedData()
+            = mDataAPI.fetchParsedData()
 
     override fun toggleFilter(isFiltered: Boolean) {
         mIsFiltered = isFiltered
-        mWordCountRepository.toggleFilter( mIsFiltered )
+        mDataAPI.toggleFilter( mIsFiltered )
     }
 }
