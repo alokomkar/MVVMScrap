@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.util.Log
 
+@Dao
 interface ResponseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
