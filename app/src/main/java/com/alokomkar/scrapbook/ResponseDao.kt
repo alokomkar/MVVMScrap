@@ -24,6 +24,9 @@ interface ResponseDao {
     @Query("SELECT * FROM CountResponse WHERE url = :url")
     abstract fun findLiveById( url: String ) : LiveData<CountResponse>
 
+    @Query("SELECT * FROM CountResponse WHERE url = :url")
+    abstract fun findById( url: String ) : CountResponse?
+
     @Transaction
     open fun insertOrUpdate(countResponse: CountResponse) {
         Log.d( ResponseDao::class.java.simpleName, "insertOrUpdate : attempt insert : $countResponse")
