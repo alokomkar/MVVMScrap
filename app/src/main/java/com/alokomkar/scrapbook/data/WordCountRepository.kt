@@ -1,9 +1,8 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.data
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.os.AsyncTask
 
 
 class WordCountRepository( application: Application ) : DataAPI, TaskAPI {
@@ -18,8 +17,8 @@ class WordCountRepository( application: Application ) : DataAPI, TaskAPI {
     private var mIsFiltered : Boolean = false
     private var mUrl : String ?= null
     private val mMutableContent = MutableLiveData<List<WordCount>>()
-    private val mResponseDao = SBRoomDatabase.getDbInstance( application ).responseDao()
-    private val mTaskAPI : TaskAPI = WordCountTask.getTaskAPI( application, mResponseDao, this, mIsFiltered )
+    private val mResponseDao = SBRoomDatabase.getDbInstance(application).responseDao()
+    private val mTaskAPI : TaskAPI = WordCountTask.getTaskAPI(application, mResponseDao, this, mIsFiltered)
 
     override fun toggleFilter( isFiltered: Boolean ) {
         mIsFiltered = isFiltered

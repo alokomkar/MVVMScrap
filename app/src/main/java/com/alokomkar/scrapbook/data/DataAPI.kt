@@ -1,6 +1,8 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.data
 
 import android.arch.lifecycle.LiveData
+import com.alokomkar.scrapbook.base.BaseAPI
+import com.alokomkar.scrapbook.data.WordCount
 
 interface DataAPI : BaseAPI<WordCount> {
     fun parseUrl( url : String )

@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.ui
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.alokomkar.scrapbook.R
+import com.alokomkar.scrapbook.data.WordCount
 
 @SuppressLint("InflateParams")
-class WordCountAdapter( private var contentList: ArrayList<WordCount>, var mCount: Int ) : RecyclerView.Adapter<WordCountAdapter.ViewHolder>() {
+class WordCountAdapter(private var contentList: ArrayList<WordCount>, var mCount: Int ) : RecyclerView.Adapter<WordCountAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
             = ViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.item_word_count, null))
@@ -25,7 +27,7 @@ class WordCountAdapter( private var contentList: ArrayList<WordCount>, var mCoun
         private val tvWord = itemView.findViewById<TextView>(R.id.tvWord)
         private val tvCount = itemView.findViewById<TextView>(R.id.tvCount)
 
-        fun bindData( wordCount: WordCount ) {
+        fun bindData( wordCount: WordCount) {
             tvWord.text = wordCount.word
             tvCount.text = wordCount.count.toString()
         }

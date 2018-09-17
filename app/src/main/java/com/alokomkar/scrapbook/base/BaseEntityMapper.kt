@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.base
 
 interface BaseEntityMapper<T, V> {
     fun mapFromCached( type : T ) : ArrayList<V>

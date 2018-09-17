@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.data
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*

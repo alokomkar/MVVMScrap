@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.data
 
 import android.app.Application
 import android.content.Context
@@ -72,7 +72,7 @@ class WordCountTask(private val application : Application,
 
 
                     for( (key, value) in countMap )
-                        contentList.add( WordCount(key, value) )
+                        contentList.add(WordCount(key, value))
 
                     contentList.sortWith(Comparator { w1, w2 -> w2.count - w1.count })
 
@@ -121,7 +121,7 @@ class WordCountTask(private val application : Application,
     companion object {
 
         fun getTaskAPI(application: Application, responseDao: ResponseDao, taskAPI: TaskAPI, mIsFiltered: Boolean): TaskAPI {
-            return WordCountTask( application, responseDao, taskAPI, mIsFiltered )
+            return WordCountTask(application, responseDao, taskAPI, mIsFiltered)
         }
 
     }

@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.data
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

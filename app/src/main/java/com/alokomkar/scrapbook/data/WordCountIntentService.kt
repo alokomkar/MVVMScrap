@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.data
 
 import android.app.Application
 import android.app.IntentService
@@ -79,7 +79,7 @@ class WordCountIntentService : IntentService( WordCountIntentService::class.java
                             .replace("  ", " ")
                             .split(" "))
 
-                    if( intent.getBooleanExtra( FLAG_FILTERED, false ) )
+                    if( intent.getBooleanExtra(FLAG_FILTERED, false ) )
                         keysArray.removeAll(mFilterKeys)
 
                     for( word in keysArray )
@@ -88,7 +88,7 @@ class WordCountIntentService : IntentService( WordCountIntentService::class.java
 
 
                 for( (key, value) in countMap )
-                    contentList.add( WordCount(key, value) )
+                    contentList.add(WordCount(key, value))
 
                 contentList.sortWith(Comparator { w1, w2 -> w2.count - w1.count })
             } catch ( e: Exception ) {

@@ -1,4 +1,4 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -11,6 +11,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alokomkar.scrapbook.R
+import com.alokomkar.scrapbook.data.WordCount
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -33,7 +35,7 @@ class MainActivityFragment : Fragment(), Observer<List<WordCount>> {
         mWordCountViewModel = activity?.let { ViewModelProviders.of(it).get( WordCountViewModel::class.java ) }
 
         rvContent.layoutManager = LinearLayoutManager( context )
-        mWordCountAdapter = WordCountAdapter( mContentList, mWordCountViewModel!!.mCount )
+        mWordCountAdapter = WordCountAdapter(mContentList, mWordCountViewModel!!.mCount)
         rvContent.adapter = mWordCountAdapter
 
         refreshLayout.setOnRefreshListener {

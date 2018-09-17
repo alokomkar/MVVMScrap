@@ -1,12 +1,15 @@
-package com.alokomkar.scrapbook
+package com.alokomkar.scrapbook.ui
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import com.alokomkar.scrapbook.data.DataAPI
+import com.alokomkar.scrapbook.data.WordCount
+import com.alokomkar.scrapbook.data.WordCountRepository
 
-class WordCountViewModel( application: Application ) : AndroidViewModel( application ), DataAPI  {
+class WordCountViewModel( application: Application ) : AndroidViewModel( application ), DataAPI {
 
-    private val mDataAPI : DataAPI = WordCountRepository( application )
+    private val mDataAPI : DataAPI = WordCountRepository(application)
     var mIsFiltered : Boolean = false
     var mCount : Int = -1
 
