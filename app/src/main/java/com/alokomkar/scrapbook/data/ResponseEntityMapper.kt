@@ -3,7 +3,7 @@ package com.alokomkar.scrapbook.data
 import com.alokomkar.scrapbook.base.BaseEntityMapper
 import com.google.gson.Gson
 
-class ResponseEntityMapper() : BaseEntityMapper<CountResponse, WordCount> {
+class ResponseEntityMapper : BaseEntityMapper<CountResponse, WordCount> {
 
     override fun mapFromCached(type: CountResponse): ArrayList<WordCount>
             = Gson().fromJson<ResponseCache>( type.countJson, ResponseCache::class.java ).countsList

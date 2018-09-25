@@ -5,7 +5,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 
 
-class WordCountRepository( application: Application ) : DataAPI, TaskAPI {
+class WordCountRepository( val application: Application ) : DataAPI, TaskAPI {
 
 
     //https://www.journaldev.com/20126/android-rss-feed-app
@@ -18,7 +18,7 @@ class WordCountRepository( application: Application ) : DataAPI, TaskAPI {
     private var mUrl : String ?= null
     private val mMutableContent = MutableLiveData<List<WordCount>>()
     private val mResponseDao = SBRoomDatabase.getDbInstance(application).responseDao()
-    private val mTaskAPI : TaskAPI = WordCountTask.getTaskAPI(application, mResponseDao, this, mIsFiltered)
+    private lateinit var mTaskAPI : TaskAPI
 
     override fun toggleFilter( isFiltered: Boolean ) {
         mIsFiltered = isFiltered
@@ -28,6 +28,7 @@ class WordCountRepository( application: Application ) : DataAPI, TaskAPI {
 
     @Synchronized
     override fun parseUrl(url: String) {
+        mTaskAPI  = WordCountTask.getTaskAPI( application, mResponseDao, this, mIsFiltered )
         mTaskAPI.execute( url )
         //fetchParsedData()
     }
