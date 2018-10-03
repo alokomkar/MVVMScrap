@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.*
 
 //Using a Service won't ensure smooth user experience - all tasks need to have a thread / async task / others spawned to ensure smooth operation
+//https://medium.com/@ankit_aggarwal/ways-to-communicate-between-activity-and-service-6a8f07275297
+//https://proandroiddev.com/deep-dive-into-android-services-4830b8c9a09
 class WordCountService : Service(), TaskAPI {
 
     private var mContentList : List<WordCount> ?= null
