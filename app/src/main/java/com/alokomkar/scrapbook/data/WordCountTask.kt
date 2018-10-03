@@ -21,7 +21,8 @@ class WordCountTask(private val application : Application,
     private val TAG = WordCountTask::class.java.simpleName
     private val CONTENT_TAG = "content"
 
-    private val mFilterKeys = arrayOf("of", "the", "a",
+    private val mFilterKeys = arrayOf(
+            "of", "the", "a",
             "an" , "with", "he",
             "she", "it", "they",
             "them", "in", "also",

@@ -1,5 +1,3 @@
 package com.alokomkar.scrapbook.base
 
-interface BaseAPI<T> {
-
-}
+interface BaseAPI<T>

@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".data.WordCountIntentService" android:exported="false" android:enabled="true" />
+        <service android:name=".data.WordCountService" android:exported="false" android:enabled="true" />
     </application>
 
 </manifest>

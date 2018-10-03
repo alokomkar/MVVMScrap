@@ -1,11 +1,23 @@
 package com.alokomkar.scrapbook.data
 
+import android.app.Activity
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.ComponentName
+import android.content.ServiceConnection
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
 
 
-class WordCountRepository( val application: Application ) : DataAPI, TaskAPI {
+class WordCountRepository(private val application: Application ) : DataAPI, TaskAPI, ServiceConnection, WordCountService.WordResultReceiver {
+
+    override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+        if( resultCode == Activity.RESULT_OK && resultData != null ) {
+            onDataFetched( resultData.getParcelableArrayList(WordCount::class.java.simpleName) )
+        }
+    }
 
 
     //https://www.journaldev.com/20126/android-rss-feed-app
@@ -17,8 +29,8 @@ class WordCountRepository( val application: Application ) : DataAPI, TaskAPI {
     private var mIsFiltered : Boolean = false
     private var mUrl : String ?= null
     private val mMutableContent = MutableLiveData<List<WordCount>>()
-    private val mResponseDao = SBRoomDatabase.getDbInstance(application).responseDao()
-    private lateinit var mTaskAPI : TaskAPI
+    private var mService: WordCountService ?= null
+    private val mResultReceiver : WordCountService.WordCountResultReceiver = WordCountService.WordCountResultReceiver( Handler() )
 
     override fun toggleFilter( isFiltered: Boolean ) {
         mIsFiltered = isFiltered
@@ -28,8 +40,8 @@ class WordCountRepository( val application: Application ) : DataAPI, TaskAPI {
 
     @Synchronized
     override fun parseUrl(url: String) {
-        mTaskAPI  = WordCountTask.getTaskAPI( application, mResponseDao, this, mIsFiltered )
-        mTaskAPI.execute( url )
+        mResultReceiver.setResultReceiver( this )
+        WordCountService.startService( application, url, mIsFiltered, mResultReceiver )
         //fetchParsedData()
     }
 
@@ -40,5 +52,13 @@ class WordCountRepository( val application: Application ) : DataAPI, TaskAPI {
             = mMutableContent.postValue( contentList )
 
     override fun execute(url: String) {}
+
+    override fun onServiceDisconnected( componentName : ComponentName?) {
+        mService = null
+    }
+
+    override fun onServiceConnected( componentName: ComponentName?, binder: IBinder?) {
+        mService = ( binder as WordCountService.WordCountBinder ).getService()
+    }
 
 }
