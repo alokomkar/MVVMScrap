@@ -43,7 +43,7 @@ class WordCountService : Service(), TaskAPI {
         fun onReceiveResult(resultCode: Int, resultData: Bundle?)
     }
 
-    //To communicate with main screen - activity or fragment
+    //To communicate with main screen - activity or fragment - https://stackoverflow.com/questions/4510974/using-resultreceiver-in-android
     class WordCountResultReceiver( handler : Handler ) : ResultReceiver( handler ) {
 
         private var mWordResultReceiver : WordResultReceiver ?= null
