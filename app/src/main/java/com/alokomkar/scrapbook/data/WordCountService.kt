@@ -14,7 +14,7 @@ class WordCountService : Service(), TaskAPI {
     private val mWordCountBinder = WordCountBinder()
 
     //For long running tasks - communication via result receiver
-    private var mResultReceiver : WordCountResultReceiver ?= null
+    private var mResultReceiver : ResultReceiver ?= null
 
     //http://www.vogella.com/tutorials/AndroidServices/article.html#exercise_bindlocalservice
     override fun onDataFetched(contentList: List<WordCount>?) {
@@ -25,11 +25,8 @@ class WordCountService : Service(), TaskAPI {
             bundle.putParcelableArrayList(WordCount::class.java.simpleName, if( contentList != null ) ArrayList(mContentList) else ArrayList() )
             this.mResultReceiver?.send( Activity.RESULT_OK, bundle )
         }
-
         stopSelf()
     }
-
-    fun getContentList() : List<WordCount>? = mContentList
 
     override fun execute(url: String) {}
 
