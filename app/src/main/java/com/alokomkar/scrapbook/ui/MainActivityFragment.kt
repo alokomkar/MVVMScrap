@@ -11,6 +11,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alokomkar.scrapbook.Injection
 import com.alokomkar.scrapbook.R
 import com.alokomkar.scrapbook.data.WordCount
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -32,17 +33,21 @@ class MainActivityFragment : Fragment(), Observer<List<WordCount>> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mWordCountViewModel = activity?.let { ViewModelProviders.of(it).get( WordCountViewModel::class.java ) }
+        activity?.let {
+            mWordCountViewModel = ViewModelProviders.of(it, Injection.provideViewModelFactory(activity!!.application))
+                    .get( WordCountViewModel::class.java )
+            fetchParsedData()
+        }
 
-        rvContent.layoutManager = LinearLayoutManager( context )
-        mWordCountAdapter = WordCountAdapter(mContentList, mWordCountViewModel!!.mCount)
-        rvContent.adapter = mWordCountAdapter
+        rvContent.apply {
+            layoutManager = LinearLayoutManager( context )
+            mWordCountAdapter = WordCountAdapter(mContentList, mWordCountViewModel!!.mCount)
+            adapter = mWordCountAdapter
+        }
 
         refreshLayout.setOnRefreshListener {
             fab.callOnClick()
         }
-
-        mWordCountViewModel?.fetchParsedData()?.observe(this, this )
 
         fab.setOnClickListener {
             if( validate() ) {
@@ -83,6 +88,10 @@ class MainActivityFragment : Fragment(), Observer<List<WordCount>> {
             }
 
         })
+    }
+
+    private fun fetchParsedData() {
+        mWordCountViewModel?.fetchParsedData()?.observe(this, this )
     }
 
     private fun validate(): Boolean {

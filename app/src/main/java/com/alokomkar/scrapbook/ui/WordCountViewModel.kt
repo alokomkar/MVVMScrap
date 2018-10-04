@@ -5,11 +5,9 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import com.alokomkar.scrapbook.data.DataAPI
 import com.alokomkar.scrapbook.data.WordCount
-import com.alokomkar.scrapbook.data.WordCountRepository
 
-class WordCountViewModel( application: Application ) : AndroidViewModel( application ), DataAPI {
+class WordCountViewModel( application: Application, private val dataAPI: DataAPI ) : AndroidViewModel( application ), DataAPI {
 
-    private val mDataAPI : DataAPI = WordCountRepository(application)
     var mIsFiltered : Boolean = false
     var mCount : Int = -1
 
@@ -17,13 +15,13 @@ class WordCountViewModel( application: Application ) : AndroidViewModel( applica
             = parseUrl(url)
 
     override fun parseUrl( url: String )
-            = mDataAPI.parseUrl( url )
+            = dataAPI.parseUrl( url )
 
     override fun fetchParsedData(): LiveData<List<WordCount>>
-            = mDataAPI.fetchParsedData()
+            = dataAPI.fetchParsedData()
 
     override fun toggleFilter(isFiltered: Boolean) {
         mIsFiltered = isFiltered
-        mDataAPI.toggleFilter( mIsFiltered )
+        dataAPI.toggleFilter( mIsFiltered )
     }
 }
